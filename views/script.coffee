@@ -26,5 +26,16 @@ $ ->
     console.log arg.valueOf()
     
   title.set color: 'black'
-  title.promptColor()
-  title.promptText()
+  # title.promptColor()
+  # title.promptText()
+
+ships = new Backbone.Collection
+ships.bind 'add', (ship) ->
+  alert "Ahoy #{ship.get 'name'} !"
+  console.log ship.cid
+
+ships.add [
+  {name: "Flying Dutchman"}
+  {name: "Black Pearl"}
+]
+  
