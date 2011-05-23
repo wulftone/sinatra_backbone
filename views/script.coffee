@@ -34,8 +34,14 @@ ships.bind 'add', (ship) ->
   alert "Ahoy #{ship.get 'name'} !"
   console.log ship.cid
 
-ships.add [
-  {name: "Flying Dutchman"}
-  {name: "Black Pearl"}
-]
+# ships.add [
+  # {name: "Flying Dutchman"}
+  # {name: "Black Pearl"}
+# ]
   
+Backbone.sync = (method, model) ->
+  alert "#{method}: #{model.url}"
+  
+Accounts = new Backbone.Collection
+Accounts.url = '/accounts'
+Accounts.fetch()
