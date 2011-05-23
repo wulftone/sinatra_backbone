@@ -1,0 +1,15 @@
+!!! 5
+%html
+  %head
+    %meta{:charset => "UTF-8"}
+    %link{:rel => "stylesheet", :href => "/styles.css"}
+    %script{:src => "/javascripts/jquery-1.6.1.min.js"}
+    %script{:src => "/javascripts/json2.js"}
+    %script{:src => "/javascripts/underscore-min.js"}
+    %script{:src => "/javascripts/backbone-min.js"}
+    %script{:src => "/script.js"}
+
+  %body
+    #main
+      = yield
+      
