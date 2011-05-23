@@ -39,9 +39,22 @@ ships.bind 'add', (ship) ->
   # {name: "Black Pearl"}
 # ]
   
-Backbone.sync = (method, model) ->
-  alert "#{method}: #{model.url}"
+# Backbone.sync = (method, model) ->
+  # alert "#{method}: #{model.url}"
   
-Accounts = new Backbone.Collection
-Accounts.url = '/accounts'
-Accounts.fetch()
+# Accounts = new Backbone.Collection
+# Accounts.url = '/accounts'
+# Accounts.fetch()
+
+WorkspaceController = Backbone.Controller.extend
+  routes:
+    'help': 'help'
+    'search/:query': 'search'
+    'search/:query/p:page': 'search'
+  help: ->
+    console.log 'help'
+  search: (query, page) ->
+    console.log "query: #{query}, page: #{page}"
+
+new WorkspaceController()
+Backbone.history.start()
