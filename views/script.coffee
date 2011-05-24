@@ -29,32 +29,54 @@ $ ->
   # title.promptColor()
   # title.promptText()
 
-ships = new Backbone.Collection
-ships.bind 'add', (ship) ->
-  alert "Ahoy #{ship.get 'name'} !"
-  console.log ship.cid
-
-# ships.add [
-  # {name: "Flying Dutchman"}
-  # {name: "Black Pearl"}
-# ]
+  ships = new Backbone.Collection.extend
+  ships.bind 'add', (ship) ->
+    alert "Ahoy #{ship.get 'name'} !"
+    console.log ship.cid
   
-# Backbone.sync = (method, model) ->
-  # alert "#{method}: #{model.url}"
+  # ships.add [
+    # {name: "Flying Dutchman"}
+    # {name: "Black Pearl"}
+  # ]
+    
+  # Backbone.sync = (method, model) ->
+    # alert "#{method}: #{model.url}"
+    
+  # Accounts = new Backbone.Collection
+  # Accounts.url = '/accounts'
+  # Accounts.fetch()
+  Account = Backbone.Model.extend
+    defaults:
+      firstname: 'Satoshi'
+      familyname: 'Ebisawa'
+    fullname: ->
+      console.log "#{@.get('firstname')} #{@.get('familyname')}"
+
+  Accounts = Backbone.Collection.extend
+    model: Account
+    url: '/accounts'
+  acc = new Accounts
   
-# Accounts = new Backbone.Collection
-# Accounts.url = '/accounts'
-# Accounts.fetch()
-
-WorkspaceController = Backbone.Controller.extend
-  routes:
-    'help': 'help'
-    'search/:query': 'search'
-    'search/:query/p:page': 'search'
-  help: ->
-    console.log 'help'
-  search: (query, page) ->
-    console.log "query: #{query}, page: #{page}"
-
-new WorkspaceController()
-Backbone.history.start()
+  WorkspaceController = Backbone.Controller.extend
+    routes:
+      'help': 'help'
+      'search/:query': 'search'
+      'search/:query/p:page': 'search'
+    help: ->
+      console.log 'help'
+    search: (query, page) ->
+      console.log "query: #{query}, page: #{page}"
+    initialize: ->
+      ac = new Account
+        firstname: 'first'
+        familyname: 'family'
+      ac.fullname()
+      ac2 = new Account
+      ac2.fullname()
+      acc.add ac
+      console.log acc.first().toJSON()
+      console.log JSON.stringify(acc.first())
+      @.saveLocation 'help'
+  
+  new WorkspaceController()
+  Backbone.history.start()
