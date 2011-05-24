@@ -23,7 +23,7 @@ $ ->
     $('h1').text text
 
   title.bind 'change', (model, arg) ->
-    console.log arg.valueOf()
+    # console.log arg.valueOf()
     
   title.set color: 'black'
   # title.promptColor()
