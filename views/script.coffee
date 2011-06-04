@@ -10,14 +10,14 @@ $ ->
       
   MessageView = Backbone.View.extend
     tagName: 'p'
-    template: _.template 'メッセージ: <%= message %>'
+    template: _.template 'メッセージ<%= id %>: <%= text %>'
     className: 'message-row'
     initialize: () ->
       _.bindAll @, 'render'
       @.model.view = @
       @.model.bind 'change', @.render
     render: () ->
-      $(this.el).html this.template(message: @.model.get('text'))
+      $(this.el).html this.template(@.model.toJSON())
       @
 
   AppView = Backbone.View.extend
@@ -35,16 +35,9 @@ $ ->
     view = new MessageView model: model
     $('#log').append view.render().el
 
-  messages.bind 'refresh', (model) ->
-    model.each (m) ->
-      # console.log m
-      # console.log m.get('text')
-      view = new MessageView model: m
+  messages.bind 'refresh', (data) ->
+    data.each (d) ->
+      view = new MessageView model: d
       $('#log').append view.render().el
 
-  messages.fetch
-    success: (col, res) ->
-      # console.log col
-      # console.log res
-      messages.refresh col
-      # messages.refresh res
+  messages.fetch()
