@@ -3,7 +3,7 @@ require 'json'
 
 # @@data = []
 # @@count = 0
-@@data = [{id:1, text:'aaaa'}]
+@@data = [{:id => 1, :text => 'aaaa'}]
 @@count = 1
 
 configure :development do
