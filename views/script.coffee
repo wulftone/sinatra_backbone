@@ -34,3 +34,17 @@ $ ->
   messages.bind 'add', (model) ->
     view = new MessageView model: model
     $('#log').append view.render().el
+
+  messages.bind 'refresh', (model) ->
+    model.each (m) ->
+      # console.log m
+      # console.log m.get('text')
+      view = new MessageView model: m
+      $('#log').append view.render().el
+
+  messages.fetch
+    success: (col, res) ->
+      # console.log col
+      # console.log res
+      messages.refresh col
+      # messages.refresh res
