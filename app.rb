@@ -1,4 +1,10 @@
 # coding: utf-8
+require 'json'
+
+# @@data = []
+# @@count = 0
+@@data = [{id:1, text:'aaaa'}]
+@@count = 1
 
 configure :development do
   config = YAML::load_file('config.yml')
@@ -23,4 +29,18 @@ end
 
 get '/' do
   haml :index
+end
+
+get '/messages' do
+  content_type :json
+  @@data.to_json
+end
+
+post '/messages' do
+  request.body.rewind
+  data = JSON.parse request.body.read
+  content_type :json
+  message = data.merge(:id => @@count += 1)
+  @@data << message
+  message.to_json
 end

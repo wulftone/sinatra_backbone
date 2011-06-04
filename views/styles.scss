@@ -1,10 +1,14 @@
-body {
+#main {
   background-color: #fff;
   color: #666;
 }
-
-#main {
-  h1 {
-    color: #000;
-  }
+h1 {
+}
+#log {
+  width: 98%;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #666;
+  max-height: 600px;
+  overflow: auto;
 }
