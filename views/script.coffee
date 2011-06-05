@@ -17,27 +17,27 @@ $ ->
       @.model.view = @
       @.model.bind 'change', @.render
     render: () ->
-      $(this.el).html this.template(@.model.toJSON())
+      $(@.el).html @.template(@.model.toJSON())
       @
 
   AppView = Backbone.View.extend
     el: $('#main')
     events:
-      'click #send': "addMessage"
-    addMessage: (data) ->
+      'click #send': 'createMessage'
+    initialize: () ->
+      _.bindAll @, 'createMessage', 'addOne', 'addAll'
+      messages.bind 'add', @.addOne
+      messages.bind 'refresh', @.addAll
+    createMessage: (data) ->
       message = $('#message').val()
       $('#message').val ''
       messages.create text: message
+    addOne: (message) ->
+      view = new MessageView model: message
+      $('#log').append view.render().el
+    addAll: (messages) ->
+      messages.each @.addOne
 
   appview = new AppView
-
-  messages.bind 'add', (model) ->
-    view = new MessageView model: model
-    $('#log').append view.render().el
-
-  messages.bind 'refresh', (data) ->
-    data.each (d) ->
-      view = new MessageView model: d
-      $('#log').append view.render().el
 
   messages.fetch()
